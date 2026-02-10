@@ -1,6 +1,6 @@
-// Reshaa Assistant Component - Enhanced Visual Design
+// Reshaa Assistant Component - Clean, Modern Design
 import { ChatMessage } from '@/lib/types';
-import { Send, Bot, Sparkles, Clock, User as UserIcon } from 'lucide-react';
+import { Send, Bot, Sparkles, Clock } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 interface ReshaAssistantProps {
@@ -29,123 +29,101 @@ export default function ReshaAssistant({ messages, onSendMessage }: ReshaAssista
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 h-full flex flex-col overflow-hidden">
-      {/* Enhanced Header with Gradient */}
-      <div className="
-        bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600
-        px-6 py-5 border-b border-indigo-200 shadow-lg
-      ">
+    <div className="bg-white rounded-xl border border-slate-200 h-full flex flex-col">
+      {/* Simplified Header - Clean, No Gradient */}
+      <div className="bg-slate-50 border-b border-slate-200 px-5 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="
-              w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm 
-              flex items-center justify-center border-2 border-white/30
-              shadow-lg
-            ">
-              <Bot size={28} className="text-white" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center">
+              <Bot size={20} className="text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white tracking-tight">Reshaa</h2>
-              <p className="text-sm text-indigo-100 mt-0.5">AI Coordinator & Personal Assistant</p>
+              <h2 className="text-base font-semibold text-slate-900">Reshaa</h2>
+              <p className="text-xs text-slate-500">AI Coordinator</p>
             </div>
           </div>
-          <div className="
-            flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm 
-            rounded-full text-white text-sm font-semibold border border-white/30 shadow-md
-          ">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-lg shadow-emerald-400/50" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-medium">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Online
           </div>
         </div>
       </div>
 
-      {/* Messages - Enhanced Design */}
-      <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 bg-gradient-to-b from-gray-50/50 to-white">
+      {/* Messages - Simplified Bubbles */}
+      <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
         {messages.map((msg, idx) => (
-          <MessageBubble key={msg.id} message={msg} isReshaa={msg.from === 'Reshaa'} isLast={idx === messages.length - 1} />
+          <MessageBubble key={msg.id} message={msg} isReshaa={msg.from === 'Reshaa'} />
         ))}
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full text-gray-400">
-            <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center mb-4">
-              <Bot size={40} className="text-indigo-300" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-600 mb-2">Start chatting with Reshaa</h3>
-            <p className="text-sm text-gray-500 text-center">
-              Reshaa coordinates all agents and can help you manage tasks,<br/>
-              review work, and make decisions.
-            </p>
+          <div className="flex flex-col items-center justify-center h-full text-slate-400">
+            <Bot size={36} className="mb-2 opacity-50" />
+            <p className="font-medium text-sm">Chat with Reshaa</p>
+            <p className="text-xs mt-1">Your AI coordinator is ready to help</p>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input - Enhanced Design */}
-      <div className="px-6 py-5 border-t border-gray-200 bg-gradient-to-b from-gray-50 to-white">
-        {/* Priority Toggle - Larger and More Prominent */}
-        <div className="flex items-center gap-3 mb-4">
+      {/* Input - Simplified Design */}
+      <div className="p-4 border-t border-slate-200">
+        {/* Priority Toggle - Smaller, Cleaner */}
+        <div className="flex gap-2 mb-3">
           <button
             onClick={() => setPriority('normal')}
             className={`
-              flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all
-              flex items-center justify-center gap-2
+              flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition-all
+              flex items-center justify-center gap-1.5
               ${priority === 'normal'
-                ? 'bg-slate-800 text-white shadow-lg shadow-slate-300 ring-2 ring-slate-500/50'
-                : 'bg-white text-slate-600 border-2 border-slate-200 hover:border-slate-300 shadow-sm'
+                ? 'bg-slate-800 text-white'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }
             `}
           >
-            <div className="w-6 h-6 rounded-lg bg-slate-200 flex items-center justify-center">
-              <UserIcon size={12} className="text-slate-600" />
-            </div>
-            Normal Priority
+            <span className="w-4 h-4 rounded bg-slate-300 flex items-center justify-center">
+              <div className="w-2 h-0.5 bg-slate-500" />
+            </span>
+            Normal
           </button>
           <button
             onClick={() => setPriority('urgent')}
             className={`
-              flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2
+              flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5
               ${priority === 'urgent'
-                ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-300 ring-2 ring-red-500/50'
-                : 'bg-red-50 text-red-600 border-2 border-red-200 hover:border-red-300 shadow-sm'
+                ? 'bg-rose-600 text-white'
+                : 'bg-rose-50 text-rose-600 hover:bg-rose-100'
               }
             `}
           >
-            <Sparkles size={18} />
+            <Sparkles size={14} />
             Urgent
           </button>
         </div>
 
-        {/* Title Input Toggle */}
-        <div className="flex justify-end mb-3">
+        {/* Title Toggle */}
+        <div className="flex justify-end mb-2">
           <button
             onClick={() => setShowTitleInput(!showTitleInput)}
-            className="
-              text-xs font-semibold text-slate-500 hover:text-slate-700 transition-colors
-              flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-100
-            "
+            className="text-xs font-medium text-slate-500 hover:text-slate-700"
           >
-            {showTitleInput ? 'Remove Title' : '+ Add Message Title'}
+            {showTitleInput ? 'Remove Title' : '+ Add Title'}
           </button>
         </div>
 
         {/* Title Input */}
         {showTitleInput && (
-          <div className="mb-3">
+          <div className="mb-2">
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Message title..."
-              className="
-                w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl
-                focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10
-                transition-all placeholder:text-slate-400 font-semibold text-sm
-              "
+              className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
             />
           </div>
         )}
 
         {/* Message Input */}
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <input
             type="text"
             value={message}
@@ -153,24 +131,20 @@ export default function ReshaAssistant({ messages, onSendMessage }: ReshaAssista
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Type your message to Reshaa..."
             className="
-              flex-1 px-5 py-3.5 bg-white border-2 border-slate-200 rounded-xl
-              focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10
-              transition-all placeholder:text-slate-400
+              flex-1 px-4 py-2.5 bg-white border border-slate-200 rounded-lg
+              focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10
+              text-sm placeholder:text-slate-400
             "
           />
           <button
             onClick={handleSend}
             disabled={!message.trim()}
             className="
-              px-6 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl
-              font-bold shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30
-              hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-0.5
-              transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none
-              flex items-center gap-2
+              px-4 py-2.5 bg-indigo-600 text-white rounded-lg
+              hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed
             "
           >
             <Send size={18} />
-            Send
           </button>
         </div>
       </div>
@@ -181,54 +155,50 @@ export default function ReshaAssistant({ messages, onSendMessage }: ReshaAssista
 interface MessageBubbleProps {
   message: ChatMessage;
   isReshaa: boolean;
-  isLast?: boolean;
 }
 
-function MessageBubble({ message, isReshaa, isLast }: MessageBubbleProps) {
+function MessageBubble({ message, isReshaa }: MessageBubbleProps) {
   return (
     <div className={`flex gap-3 py-2 ${isReshaa ? '' : 'flex-row-reverse'}`}>
-      {/* Avatar - More Prominent */}
+      {/* Avatar - Simplified */}
       <div className={`
-        w-11 h-11 rounded-2xl flex items-center justify-center text-white font-bold flex-shrink-0 shadow-md flex-shrink-0
-        ${isReshaa
-          ? 'bg-gradient-to-br from-indigo-500 to-purple-600 ring-2 ring-indigo-100'
-          : 'bg-gradient-to-br from-emerald-400 to-teal-500'
-        }
+        w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm
+        shrink-0
+        ${isReshaa ? 'bg-indigo-600' : 'bg-emerald-600'}
       `}>
         {message.from.charAt(0)}
       </div>
 
-      <div className={`flex-1 max-w-[75%] ${isReshaa ? '' : 'flex flex-col items-end'}`}>
+      <div className={`flex-1 max-w-[70%] ${isReshaa ? '' : 'flex flex-col items-end'}`}>
         {/* Title */}
         {message.title && (
-          <div className={`text-sm font-bold mb-1.5 ${isReshaa ? 'text-indigo-700' : 'text-emerald-700'}`}>
+          <div className={`text-sm font-semibold mb-1 ${isReshaa ? 'text-indigo-700' : 'text-emerald-700'}`}>
             {message.title}
           </div>
         )}
 
-        {/* Priority Badge - Prominent */}
+        {/* Priority Badge */}
         {message.priority === 'urgent' && (
-          <div className={`flex items-center gap-1.5 text-xs font-bold mb-2 ${isReshaa ? 'justify-start' : 'justify-end'}`}>
-            <div className={`inline-flex items-center px-2.5 py-1 rounded-full font-bold uppercase tracking-wide shadow-sm ${message.priority === 'urgent' ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-600'}`}>
-              <Sparkles size={10} className="mr-1" />
-              {message.priority === 'urgent' ? 'URGENT' : 'Normal'}
-            </div>
+          <div className={`flex items-center gap-1 text-xs font-bold mb-2 ${isReshaa ? 'justify-start' : 'justify-end'}`}>
+            <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 uppercase tracking-wide">
+              Urgent
+            </span>
           </div>
         )}
 
-        {/* Content - Better Styling */}
+        {/* Content - No Gradient */}
         <div className={`
-          rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm
+          px-4 py-2.5 text-sm leading-relaxed rounded-lg
           ${isReshaa
-            ? 'bg-gradient-to-br from-indigo-50 to-purple-50 text-slate-800 rounded-bl-none border border-indigo-100'
-            : 'bg-gradient-to-br from-emerald-50 to-teal-50 text-slate-800 rounded-br-none border border-emerald-100'
+            ? 'bg-slate-50 text-slate-800 rounded-bl-none border border-slate-200'
+            : 'bg-emerald-600 text-white rounded-br-none'
           }
         `}>
-          <p className="font-medium">{message.content}</p>
+          <p>{message.content}</p>
         </div>
 
-        {/* Timestamp - More Visible */}
-        <div className={`mt-2 text-xs text-slate-400 flex items-center gap-1.5 font-medium ${isReshaa ? 'justify-start' : 'justify-end'}`}>
+        {/* Timestamp */}
+        <div className={`mt-1.5 text-xs text-slate-400 flex items-center gap-1 ${isReshaa ? 'justify-start' : 'justify-end'}`}>
           <Clock size={10} />
           {formatTime(message.timestamp)}
         </div>

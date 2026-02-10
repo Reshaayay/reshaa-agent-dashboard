@@ -1,5 +1,5 @@
 // Agent Builder Component - Create new agents
-import { Plus, X, Sparkles, Settings, Bot, ChevronRight, Check } from 'lucide-react';
+import { Plus, X, Sparkles, Settings, Bot, Check } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -13,26 +13,15 @@ interface AgentBuilderProps {
 }
 
 const predefinedRoles = [
-  { role: 'Frontend Engineer', capabilities: ['React', 'Vue', 'Tailwind CSS', 'TypeScript'], icon: '🎨', color: 'indigo' },
-  { role: 'Backend Engineer', capabilities: ['Node.js', 'Python', 'API', 'Database'], icon: '⚙️', color: 'purple' },
-  { role: 'Mobile Developer', capabilities: ['React Native', 'Flutter', 'iOS', 'Android'], icon: '📱', color: 'sky' },
-  { role: 'UI/UX Designer', capabilities: ['Figma', 'Design Systems', 'Prototyping'], icon: '✨', color: 'pink' },
-  { role: 'QA Engineer', capabilities: ['Testing', 'Cypress', 'Jest', 'Code Review'], icon: '🔍', color: 'emerald' },
-  { role: 'DevOps Engineer', capabilities: ['Docker', 'Kubernetes', 'CI/CD', 'AWS'], icon: '🚀', color: 'amber' },
-  { role: 'Research Agent', capabilities: ['Research', 'Documentation', 'Analysis'], icon: '📚', color: 'cyan' },
-  { role: 'Product Manager', capabilities: ['Planning', 'Prioritization', 'Documentation'], icon: '📋', color: 'violet' },
+  { role: 'Frontend Engineer', capabilities: ['React', 'Vue', 'Tailwind CSS', 'TypeScript'], icon: '🎨' },
+  { role: 'Backend Engineer', capabilities: ['Node.js', 'Python', 'API', 'Database'], icon: '⚙️' },
+  { role: 'Mobile Developer', capabilities: ['React Native', 'Flutter', 'iOS', 'Android'], icon: '📱' },
+  { role: 'UI/UX Designer', capabilities: ['Figma', 'Design Systems', 'Prototyping'], icon: '✨' },
+  { role: 'QA Engineer', capabilities: ['Testing', 'Cypress', 'Jest', 'Code Review'], icon: '🔍' },
+  { role: 'DevOps Engineer', capabilities: ['Docker', 'Kubernetes', 'CI/CD', 'AWS'], icon: '🚀' },
+  { role: 'Research Agent', capabilities: ['Research', 'Documentation', 'Analysis'], icon: '📚' },
+  { role: 'Product Manager', capabilities: ['Planning', 'Prioritization', 'Documentation'], icon: '📋' },
 ];
-
-const colorClasses = {
-  indigo: 'from-indigo-500 to-indigo-600',
-  purple: 'from-purple-500 to-purple-600',
-  sky: 'from-sky-500 to-sky-600',
-  pink: 'from-pink-500 to-pink-600',
-  emerald: 'from-emerald-500 to-emerald-600',
-  amber: 'from-amber-500 to-amber-600',
-  cyan: 'from-cyan-500 to-cyan-600',
-  violet: 'from-violet-500 to-violet-600',
-};
 
 export default function AgentBuilder({ onCreateAgent }: AgentBuilderProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,13 +73,13 @@ export default function AgentBuilder({ onCreateAgent }: AgentBuilderProps) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full group py-4 px-5 rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50/50 hover:bg-indigo-50 hover:border-indigo-400 hover:border-solid transition-all duration-300"
+        className="w-full group py-3 px-4 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 hover:bg-indigo-50 hover:border-indigo-400 hover:border-solid transition-all duration-200"
       >
-        <div className="flex items-center justify-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gray-100 group-hover:bg-indigo-100 flex items-center justify-center transition-colors">
-            <Plus size={20} className="text-gray-500 group-hover:text-indigo-600" />
+        <div className="flex items-center justify-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-indigo-100 flex items-center justify-center transition-colors">
+            <Plus size={18} className="text-slate-500 group-hover:text-indigo-600" />
           </div>
-          <span className="font-semibold text-gray-500 group-hover:text-indigo-700 transition-colors">
+          <span className="font-semibold text-slate-500 group-hover:text-indigo-700 transition-colors text-sm">
             Add New Agent
           </span>
         </div>
@@ -99,33 +88,33 @@ export default function AgentBuilder({ onCreateAgent }: AgentBuilderProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 px-5 py-4">
+      <div className="bg-slate-50 border-b border-slate-200 px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-              <Bot size={22} className="text-white" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center">
+              <Bot size={18} className="text-white" />
             </div>
-            <div className="text-white">
-              <h3 className="font-bold text-lg">Create New Agent</h3>
-              <p className="text-indigo-100 text-xs font-medium">Add to your AI team</p>
+            <div>
+              <h3 className="font-semibold text-slate-900 text-sm">Create New Agent</h3>
+              <p className="text-xs text-slate-500">Add to your AI team</p>
             </div>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="text-white/80 hover:text-white hover:bg-white/10 p-2 rounded-xl transition-colors"
+            className="text-slate-400 hover:text-slate-600 hover:bg-slate-100 p-2 rounded-lg transition-colors"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
       </div>
 
-      <div className="p-5 space-y-5">
+      <div className="p-4 space-y-4">
         {/* Quick Start Roles */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
-            <Sparkles size={16} className="text-indigo-500" />
+          <label className="block text-xs font-semibold text-slate-700 mb-2 flex items-center gap-1.5">
+            <Sparkles size={14} className="text-indigo-600" />
             Quick Start - Select Role
           </label>
           <div className="grid grid-cols-2 gap-2">
@@ -136,14 +125,14 @@ export default function AgentBuilder({ onCreateAgent }: AgentBuilderProps) {
                   key={item.role}
                   onClick={() => handleSelectRole(index)}
                   className={cn(
-                    "px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-left flex items-center justify-between",
+                    "px-3 py-2 rounded-lg text-sm font-medium transition-all text-left flex items-center justify-between",
                     isSelected
-                      ? `bg-gradient-to-r ${colorClasses[item.color as keyof typeof colorClasses]} text-white shadow-md`
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-indigo-600 text-white'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   )}
                 >
-                  <span>{item.icon} {item.role}</span>
-                  {isSelected && <Check size={16} />}
+                  <span className="text-xs">{item.icon} {item.role}</span>
+                  {isSelected && <Check size={14} />}
                 </button>
               );
             })}
@@ -152,66 +141,66 @@ export default function AgentBuilder({ onCreateAgent }: AgentBuilderProps) {
 
         {/* Agent Name */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
             Agent Name <span className="text-rose-500">*</span>
           </label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="e.g., CodeMaster, DesignBot"
-            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all"
+            placeholder="e.g., CodeMaster"
+            className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-600 text-sm transition-all"
           />
         </div>
 
         {/* Role */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
             Role <span className="text-rose-500">*</span>
           </label>
           <input
             type="text"
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            placeholder="e.g., Frontend Engineer, QA Manager"
-            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all"
+            placeholder="e.g., Frontend Engineer"
+            className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-600 text-sm transition-all"
           />
         </div>
 
         {/* Capabilities */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
             Capabilities <span className="text-rose-500">*</span>
           </label>
-          <div className="flex gap-2 mb-3">
+          <div className="flex gap-2 mb-2">
             <input
               type="text"
               value={newCapability}
               onChange={(e) => setNewCapability(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleAddCapability()}
               placeholder="Add a capability..."
-              className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all"
+              className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-600 text-sm transition-all"
             />
             <button
               onClick={handleAddCapability}
-              className="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 hover:text-gray-900 transition-colors"
+              className="px-3 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 hover:text-slate-900 transition-colors"
             >
-              <Plus size={18} />
+              <Plus size={16} />
             </button>
           </div>
           {capabilities.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {capabilities.map((cap) => (
                 <span
                   key={cap}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 border border-indigo-200"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-700"
                 >
                   {cap}
                   <button
                     onClick={() => handleRemoveCapability(cap)}
-                    className="hover:text-indigo-900 hover:bg-indigo-100 rounded p-0.5 transition-colors"
+                    className="hover:text-indigo-900 hover:bg-indigo-200 rounded p-0.5 transition-colors"
                   >
-                    <X size={12} />
+                    <X size={10} />
                   </button>
                 </span>
               ))}
@@ -221,15 +210,15 @@ export default function AgentBuilder({ onCreateAgent }: AgentBuilderProps) {
 
         {/* Initial Task */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
             Initial Task <span className="text-rose-500">*</span>
           </label>
           <textarea
             value={task}
             onChange={(e) => setTask(e.target.value)}
-            placeholder="Describe the agent's first task or mission..."
+            placeholder="Describe the agent's first task..."
             rows={3}
-            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm resize-none transition-all"
+            className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-600 text-sm resize-none transition-all"
           />
         </div>
 
@@ -238,15 +227,14 @@ export default function AgentBuilder({ onCreateAgent }: AgentBuilderProps) {
           onClick={handleCreate}
           disabled={!name.trim() || !role.trim() || capabilities.length === 0 || !task.trim()}
           className={cn(
-            "w-full py-4 rounded-xl transition-all flex items-center justify-center gap-2 font-bold text-base shadow-lg",
+            "w-full py-3 rounded-lg transition-all flex items-center justify-center gap-2 font-semibold text-sm",
             name.trim() && role.trim() && capabilities.length > 0 && task.trim()
-              ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 hover:-translate-y-0.5"
-              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              ? "bg-gradient-to-r from-indigo-600 to-indigo-700 text-white hover:from-indigo-700 hover:to-indigo-800"
+              : "bg-slate-200 text-slate-400 cursor-not-allowed"
           )}
         >
-          <Sparkles size={20} />
+          <Sparkles size={16} />
           Create Agent
-          <ChevronRight size={20} />
         </button>
       </div>
     </div>

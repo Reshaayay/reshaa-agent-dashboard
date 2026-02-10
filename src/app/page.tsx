@@ -1,4 +1,4 @@
-// Main Dashboard Page
+// Main Dashboard Page - Clean, Modern Design
 'use client';
 
 import { useEffect } from 'react';
@@ -12,7 +12,7 @@ import ReshaAssistant from '@/components/ReshaAssistant';
 import BroadcastPanel from '@/components/BroadcastPanel';
 import AgentBuilder from '@/components/AgentBuilder';
 import { mockAgents, mockTasks, mockChatMessages } from '@/lib/gateway';
-import { Activity, Bot, MessageSquare, Settings, Bell, Sparkles } from 'lucide-react';
+import { Activity, Bot, MessageSquare, Settings, Bell, Zap } from 'lucide-react';
 
 export default function Dashboard() {
   const {
@@ -42,7 +42,6 @@ export default function Dashboard() {
     setChatMessages(mockChatMessages.filter((m) => m.channel === 'agent-chat'));
     setAgentInputs(mockChatMessages.filter((m) => m.channel === 'agent-inputs'));
 
-    // Add some initial reshaa messages
     setReshaMessages([
       {
         id: 'reshaa-1',
@@ -98,7 +97,6 @@ export default function Dashboard() {
 
     addReshaMessage(message);
 
-    // Simulate Reshaa response after 2 seconds
     setTimeout(() => {
       const response: ChatMessage = {
         id: `reshaa-resp-${Date.now()}`,
@@ -124,7 +122,6 @@ export default function Dashboard() {
 
     addBroadcast(broadcast);
 
-    // Also add to chat
     const message: ChatMessage = {
       id: `msg-${Date.now()}`,
       from: 'Rajpal',
@@ -162,13 +159,9 @@ export default function Dashboard() {
     };
 
     addTask(newTask);
-
-    // Update state
-    const updatedAgents = [...agents, newAgent];
-    setAgents(updatedAgents);
+    setAgents([...agents, newAgent]);
     updateStats();
 
-    // Add notification to chat
     const message: ChatMessage = {
       id: `msg-${Date.now()}`,
       from: 'Reshaa',
@@ -181,32 +174,33 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-[1920px] mx-auto px-6 py-4">
+    <div className="min-h-screen bg-slate-100">
+      {/* Simplified Header - No Gradient */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-[1800px] mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center shadow-lg shadow-indigo-200">
-                <Bot size={26} className="text-white" />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center">
+                <Bot size={20} className="text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Reshaa Agent Dashboard</h1>
-                <p className="text-sm font-medium text-gray-500 flex items-center gap-2">
-                  <Sparkles size={14} className="text-indigo-500" />
-                  AI Development Team Command Center
-                </p>
+                <h1 className="text-lg font-bold text-slate-900">Reshaa Agent Dashboard</h1>
+                <p className="text-xs text-slate-500">AI Development Team Command Center</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <button className="relative p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-xl transition-colors">
-                <Bell size={20} />
-                <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white"></span>
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium">
+                <Zap size={12} className="text-amber-500" />
+                <span>Live</span>
+              </div>
+              <button className="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+                <Bell size={18} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full"></span>
               </button>
-              <button className="p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-xl transition-colors">
-                <Settings size={20} />
+              <button className="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+                <Settings size={18} />
               </button>
-              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg shadow-md ring-2 ring-white">
+              <div className="w-9 h-9 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-sm">
                 R
               </div>
             </div>
@@ -214,104 +208,75 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-[1920px] mx-auto px-6 py-6 space-y-6">
-        {/* Stats Overview */}
-        <section aria-label="Dashboard Overview">
+      {/* Main Content - More Whitespace */}
+      <main className="max-w-[1800px] mx-auto p-6 space-y-6">
+        {/* Stats - With more spacing */}
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
           <StatsCards stats={useDashboardStore.getState().stats} />
-        </section>
+        </div>
 
-        {/* Section Divider */}
-        <div className="section-divider-lg" />
-
-        {/* Main Grid */}
+        {/* Main Grid - Bigger gaps for breathing room */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column - Agents */}
           <div className="lg:col-span-3">
-            <section className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-              <div className="section-header bg-gradient-to-r from-gray-50 to-white px-6 py-4 cursor-pointer hover:from-gray-100 transition-all">
-                <div className="section-title">
-                  <div className="section-icon bg-gradient-to-br from-indigo-500 to-purple-600">
-                    <Activity size={20} className="text-white" />
-                  </div>
-                  <div>
-                    <h2 className="h2">Agents</h2>
-                    <p className="text-xs text-gray-500 font-semibold">{agents.length} in team</p>
-                  </div>
-                </div>
+            <div className="bg-white rounded-xl border border-slate-200 p-5">
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-base font-semibold text-slate-900">Active Agents</h2>
+                <span className="text-xs text-slate-500">{agents.length} total</span>
               </div>
-              <div className="p-4 space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto scrollbar-thin">
+              <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
                 {agents.map((agent) => (
-                  <AgentStatusCard
-                    key={agent.id}
-                    agent={agent}
-                    selected={false}
-                  />
+                  <AgentStatusCard key={agent.id} agent={agent} selected={false} />
                 ))}
               </div>
-            </section>
+            </div>
           </div>
 
           {/* Center Column - Tasks & Chat */}
           <div className="lg:col-span-6 space-y-6">
             {/* Task Board */}
-            <section className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-              <div className="section-header bg-gradient-to-r from-gray-50 to-white px-6 py-4">
-                <div className="section-title">
-                  <div className="section-icon bg-gradient-to-br from-sky-500 to-blue-600">
-                    <MessageSquare size={20} className="text-white" />
-                  </div>
-                  <div>
-                    <h2 className="h2">Task Board</h2>
-                    <p className="text-xs text-gray-500 font-semibold">{tasks.length} total tasks</p>
-                  </div>
-                </div>
+            <div className="bg-white rounded-xl border border-slate-200 p-5">
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-base font-semibold text-slate-900">Task Board</h2>
               </div>
-              <div className="p-5">
-                <TaskBoard tasks={tasks} />
-              </div>
-            </section>
+              <TaskBoard tasks={tasks} />
+            </div>
 
             {/* Chat Channels */}
-            <section className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="bg-white rounded-xl border border-slate-200 p-5 h-[500px]">
               <ChatChannels
                 agent_chat={chatMessages}
                 agent_inputs={agentInputs}
                 onSendMessage={handleSendChatMessage}
               />
-            </section>
+            </div>
           </div>
 
-          {/* Right Column - Reshaa, Broadcast, Agent Builder */}
+          {/* Right Column - Reshaa & Tools */}
           <div className="lg:col-span-3 space-y-6">
             {/* Reshaa Assistant */}
-            <section>
+            <div className="bg-white rounded-xl border border-slate-200 p-5 h-[600px]">
               <ReshaAssistant
                 messages={reshaMessages}
                 onSendMessage={handleSendReshaaMessage}
               />
-            </section>
+            </div>
 
             {/* Broadcast Panel */}
-            <section>
+            <div>
               <BroadcastPanel
                 broadcasts={broadcasts}
                 onSendBroadcast={handleSendBroadcast}
               />
-            </section>
+            </div>
 
             {/* Agent Builder */}
-            <section>
+            <div>
               <AgentBuilder onCreateAgent={handleCreateAgent} />
-            </section>
+            </div>
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="mt-auto py-6 text-center text-sm text-gray-500 border-t border-gray-200/50">
-        <p>Reshaa Agent Dashboard © {new Date().getFullYear()} — Powered by AI</p>
-      </footer>
     </div>
   );
 }

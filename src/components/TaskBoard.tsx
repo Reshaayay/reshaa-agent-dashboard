@@ -1,6 +1,6 @@
-// Task Board Component - Enhanced Visual Design
+// Task Board Component - Clean, Modern Design
 import { Task, TaskStatus } from '@/lib/types';
-import { Plus, AlertTriangle, CheckCircle2, Clock, MoreVertical, User } from 'lucide-react';
+import { Plus, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
 
 interface TaskBoardProps {
   tasks: Task[];
@@ -8,10 +8,10 @@ interface TaskBoardProps {
 }
 
 const columns: { status: TaskStatus; title: string; icon: any; color: string }[] = [
-  { status: 'assigned', title: 'Assigned', icon: Clock, color: 'from-blue-500 to-cyan-500' },
-  { status: 'in-progress', title: 'In Progress', icon: AlertTriangle, color: 'from-amber-500 to-orange-500' },
-  { status: 'completed', title: 'Done', icon: CheckCircle2, color: 'from-emerald-500 to-green-500' },
-  { status: 'needs-review', title: 'Needs Review', icon: AlertTriangle, color: 'from-purple-500 to-pink-500' },
+  { status: 'assigned', title: 'Assigned', icon: Clock, color: 'text-blue-600' },
+  { status: 'in-progress', title: 'In Progress', icon: AlertTriangle, color: 'text-amber-600' },
+  { status: 'completed', title: 'Done', icon: CheckCircle2, color: 'text-emerald-600' },
+  { status: 'needs-review', title: 'Needs Review', icon: AlertTriangle, color: 'text-purple-600' },
 ];
 
 export default function TaskBoard({ tasks, onUpdateTask }: TaskBoardProps) {
@@ -22,53 +22,33 @@ export default function TaskBoard({ tasks, onUpdateTask }: TaskBoardProps) {
         const columnTasks = tasks.filter((t) => t.status === column.status);
 
         return (
-          <div key={column.status} className="bg-gradient-to-b from-gray-50 to-gray-100 rounded-2xl overflow-hidden shadow-md">
-            {/* Enhanced Column Header */}
-            <div className="bg-white px-5 py-4 border-b-2 border-gray-200 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br ${column.color} shadow-lg`}>
-                    <ColumnIcon size={22} className="text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-900 leading-tight">{column.title}</h3>
-                    <p className="text-xs text-gray-500 mt-0.5">
-                      {columnTasks.length} task{columnTasks.length !== 1 ? 's' : ''}
-                    </p>
-                  </div>
+          <div key={column.status} className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+            {/* Simplified Column Header */}
+            <div className="bg-white px-4 py-3 border-b border-slate-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <ColumnIcon size={18} className={column.color} />
+                  <h3 className="text-sm font-semibold text-slate-800">{column.title}</h3>
+                  <span className="text-xs text-slate-500">({columnTasks.length})</span>
                 </div>
 
-                {/* Task Count Badge */}
                 {columnTasks.length > 0 && (
-                  <div className={`
-                    px-3 py-1.5 rounded-full text-sm font-bold shadow-sm
-                    ${columnTasks.length > 5
-                      ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white'
-                      : 'bg-gray-200 text-gray-700'
-                    }
-                  `}>
-                    {columnTasks.length}
-                  </div>
+                  <button className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all">
+                    <Plus size={18} />
+                  </button>
                 )}
-
-                <button className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all">
-                  <Plus size={20} />
-                </button>
               </div>
             </div>
 
             {/* Task Cards */}
-            <div className="p-4 space-y-3 min-h-[400px]">
+            <div className="p-3 space-y-3 min-h-[400px]">
               {columnTasks.map((task) => (
                 <TaskCard key={task.id} task={task} onUpdateTask={onUpdateTask} />
               ))}
               {columnTasks.length === 0 && (
-                <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center">
-                  <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-3">
-                    <ColumnIcon size={28} className="text-gray-400" />
-                  </div>
-                  <p className="text-gray-500 font-medium">No tasks yet</p>
-                  <p className="text-sm text-gray-400 mt-1">Click + to add a task</p>
+                <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center">
+                  <p className="text-slate-500 font-medium text-sm">No tasks yet</p>
+                  <p className="text-xs text-slate-400 mt-1">Click + to add a task</p>
                 </div>
               )}
             </div>
@@ -89,87 +69,61 @@ function TaskCard({ task, onUpdateTask }: TaskCardProps) {
 
   return (
     <div className={`
-      relative group bg-white rounded-xl p-5 
-      transition-all duration-300 cursor-pointer overflow-hidden
+      bg-white rounded-lg p-4 border
+      transition-all duration-200 cursor-pointer
       ${isUrgent
-        ? 'shadow-lg shadow-red-500/10 border-2 border-red-300 hover:border-red-400 hover:shadow-xl hover:shadow-red-500/15'
-        : 'shadow-sm border border-gray-200 hover:border-indigo-300 hover:shadow-md'
+        ? 'border-rose-300 bg-rose-50/30'
+        : 'border-slate-200 hover:border-slate-300 hover:shadow-sm'
       }
-      hover:-translate-y-1
     `}>
       {/* Urgent Banner */}
       {isUrgent && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-orange-500" />
-      )}
-
-      {/* Priority Badge */}
-      {isUrgent && (
-        <div className="absolute top-4 right-4">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-100 text-red-700 text-[11px] font-bold uppercase tracking-wide shadow-sm">
-            <AlertTriangle size={10} />
-            Urgent
-          </div>
+        <div className="flex items-center gap-1.5 mb-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+          <span className="text-xs font-bold uppercase text-rose-600 tracking-wide">Urgent</span>
         </div>
       )}
 
-      {/* Task Content */}
-      <div className={isUrgent ? 'pr-20' : ''}>
-        {/* Title */}
-        <h4 className="text-base font-bold text-gray-900 mb-2 leading-snug line-clamp-2">
-          {task.title}
-        </h4>
+      {/* Title */}
+      <h4 className="text-sm font-semibold text-slate-900 mb-1.5 line-clamp-2">
+        {task.title}
+      </h4>
 
-        {/* Description */}
-        <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-2">
-          {task.description}
-        </p>
+      {/* Description */}
+      <p className="text-xs text-slate-600 mb-3 line-clamp-2">
+        {task.description}
+      </p>
 
-        {/* Assignment Row */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white text-sm font-bold shadow-md">
-              {task.assignedTo.charAt(0).toUpperCase()}
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xs font-semibold text-gray-700">{task.assignedTo}</span>
-              <span className="text-[10px] text-gray-400">Assigned</span>
-            </div>
+      {/* Assignment Row */}
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-medium">
+            {task.assignedTo.charAt(0).toUpperCase()}
           </div>
-
-          <time className="text-xs text-gray-400 flex items-center gap-1">
-            <Clock size={10} />
-            {formatTimeAgo(task.updatedAt)}
-          </time>
+          <span className="text-xs font-medium text-slate-700">{task.assignedTo}</span>
         </div>
 
-        {/* Tags */}
-        {task.tags && task.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-3 border-t border-gray-100">
-            {task.tags.map((tag, idx) => (
-              <span
-                key={tag}
-                className={`
-                  px-2.5 py-1 rounded-lg text-xs font-semibold
-                  ${idx === 0
-                    ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white'
-                    : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
-                  }
-                  transition-colors cursor-default
-                `}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+        <time className="text-xs text-slate-400">
+          {formatTimeAgo(task.updatedAt)}
+        </time>
       </div>
 
-      {/* Hover Action */}
-      <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button className="p-2 bg-gray-100 hover:bg-indigo-100 hover:text-indigo-600 rounded-lg transition-colors">
-          <MoreVertical size={16} />
-        </button>
-      </div>
+      {/* Tags */}
+      {task.tags && task.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-100">
+          {task.tags.slice(0, 2).map((tag) => (
+            <span
+              key={tag}
+              className="px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600"
+            >
+              {tag}
+            </span>
+          ))}
+          {task.tags.length > 2 && (
+            <span className="text-xs text-slate-400">+{task.tags.length - 2}</span>
+          )}
+        </div>
+      )}
     </div>
   );
 }

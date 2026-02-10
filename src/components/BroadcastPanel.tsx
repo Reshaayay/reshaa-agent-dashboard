@@ -25,21 +25,21 @@ export default function BroadcastPanel({ broadcasts, onSendBroadcast, onDeleteBr
   return (
     <div className="space-y-4">
       {/* Send Broadcast Form */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-4">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-              <Megaphone size={22} className="text-white" />
+        <div className="bg-slate-50 border-b border-slate-200 px-4 py-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center">
+              <Megaphone size={18} className="text-white" />
             </div>
             <div>
-              <h3 className="font-bold text-white text-lg">Broadcast</h3>
-              <p className="text-amber-100 text-xs font-medium">Send to all agents</p>
+              <h3 className="font-semibold text-slate-900 text-sm">Broadcast</h3>
+              <p className="text-xs text-slate-500">Send to all agents</p>
             </div>
           </div>
         </div>
 
-        <div className="p-5 space-y-4">
+        <div className="p-4 space-y-3">
           {/* Message Input */}
           <div className="relative">
             <textarea
@@ -47,10 +47,10 @@ export default function BroadcastPanel({ broadcasts, onSendBroadcast, onDeleteBr
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Write your broadcast message..."
               rows={3}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm resize-none transition-all"
+              className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-600 text-sm resize-none transition-all"
             />
             {message && (
-              <span className="absolute bottom-3 right-3 text-xs text-gray-400 font-medium">
+              <span className="absolute bottom-2 right-2 text-xs text-slate-400 font-medium">
                 {message.length} chars
               </span>
             )}
@@ -63,10 +63,10 @@ export default function BroadcastPanel({ broadcasts, onSendBroadcast, onDeleteBr
               <button
                 onClick={() => setPriority('normal')}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2",
+                  "px-3 py-1.5 rounded-lg text-sm font-semibold transition-all",
                   priority === 'normal'
-                    ? 'bg-gray-800 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-slate-800 text-white'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 )}
               >
                 Normal
@@ -74,13 +74,13 @@ export default function BroadcastPanel({ broadcasts, onSendBroadcast, onDeleteBr
               <button
                 onClick={() => setPriority('urgent')}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2",
+                  "px-3 py-1.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-1",
                   priority === 'urgent'
-                    ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md'
+                    ? 'bg-rose-600 text-white'
                     : 'bg-white text-rose-600 hover:bg-rose-50 border border-rose-200'
                 )}
               >
-                <Sparkles size={14} />
+                <Sparkles size={12} />
                 Urgent
               </button>
             </div>
@@ -90,14 +90,14 @@ export default function BroadcastPanel({ broadcasts, onSendBroadcast, onDeleteBr
               onClick={handleSend}
               disabled={!message.trim()}
               className={cn(
-                "px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 font-semibold",
+                "px-4 py-2 rounded-lg transition-all flex items-center gap-1.5 font-semibold text-sm",
                 priority === 'urgent'
-                  ? "bg-gradient-to-r from-rose-600 to-red-600 text-white hover:from-rose-700 hover:to-red-700 shadow-lg shadow-rose-200"
-                  : "bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700 shadow-lg shadow-amber-200",
-                "disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                  ? "bg-gradient-to-r from-rose-600 to-rose-700 text-white hover:from-rose-700 hover:to-rose-800"
+                  : "bg-gradient-to-r from-indigo-600 to-indigo-700 text-white hover:from-indigo-700 hover:to-indigo-800",
+                "disabled:opacity-50 disabled:cursor-not-allowed disabled:from-slate-400 disabled:to-slate-500"
               )}
             >
-              <Megaphone size={16} />
+              <Megaphone size={14} />
               Broadcast
             </button>
           </div>
@@ -105,34 +105,34 @@ export default function BroadcastPanel({ broadcasts, onSendBroadcast, onDeleteBr
       </div>
 
       {/* Broadcast History */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+        <div className="bg-slate-50 border-b border-slate-200 px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center">
-                <Clock size={18} className="text-gray-600" />
+              <div className="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center">
+                <Clock size={16} className="text-slate-600" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900">History</h3>
-                <p className="text-xs text-gray-500">{broadcasts.length} sent</p>
+                <h3 className="font-semibold text-slate-900 text-sm">History</h3>
+                <p className="text-xs text-slate-500">{broadcasts.length} sent</p>
               </div>
             </div>
             {broadcasts.length > 0 && (
-              <Bell size={16} className="text-gray-400" />
+              <Bell size={14} className="text-slate-400" />
             )}
           </div>
         </div>
 
         {/* Broadcast List */}
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-slate-100">
           {broadcasts.length === 0 ? (
-            <div className="py-12 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center mx-auto mb-3">
-                <Megaphone size={28} className="text-gray-400" />
+            <div className="py-10 text-center">
+              <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center mx-auto mb-2">
+                <Megaphone size={20} className="text-slate-400" />
               </div>
-              <h3 className="font-semibold text-gray-700 mb-1">No broadcasts yet</h3>
-              <p className="text-sm text-gray-500">Send your first broadcast above</p>
+              <h3 className="text-sm font-semibold text-slate-700 mb-1">No broadcasts yet</h3>
+              <p className="text-xs text-slate-500">Send your first broadcast above</p>
             </div>
           ) : (
             broadcasts.map((broadcast) => (
@@ -159,42 +159,42 @@ function BroadcastItem({ broadcast, onDelete }: BroadcastItemProps) {
 
   return (
     <div className={cn(
-      "p-4 transition-all hover:bg-gray-50",
-      isUrgent ? "bg-rose-50/50" : "bg-white"
+      "p-4 transition-all hover:bg-slate-50",
+      isUrgent ? "bg-rose-50/30" : "bg-white"
     )}>
       <div className="flex items-start gap-3">
         {/* Icon */}
         <div className={cn(
-          "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5",
-          isUrgent ? "bg-rose-100" : "bg-amber-100"
+          "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
+          isUrgent ? "bg-rose-100" : "bg-slate-100"
         )}>
-          <Megaphone size={18} className={isUrgent ? "text-rose-600" : "text-amber-600"} />
+          <Megaphone size={16} className={isUrgent ? "text-rose-600" : "text-slate-600"} />
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
           {/* Header */}
-          <div className="flex items-center gap-2 mb-1.5">
+          <div className="flex items-center gap-2 mb-1">
             {isUrgent && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 border border-rose-200">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold bg-rose-100 text-rose-700">
                 <Sparkles size={10} />
                 URGENT
               </span>
             )}
-            <span className="text-xs font-semibold text-gray-400 ml-auto">
+            <span className="text-xs font-medium text-slate-400 ml-auto">
               {formatTime(broadcast.timestamp)}
             </span>
           </div>
 
           {/* Message */}
-          <p className="text-sm text-gray-800 font-medium mb-2 leading-relaxed">
+          <p className="text-sm text-slate-800 font-medium mb-2 leading-relaxed">
             {broadcast.content}
           </p>
 
           {/* Footer */}
-          <div className="flex items-center gap-1.5 text-xs text-gray-500">
+          <div className="flex items-center gap-1.5 text-xs text-slate-500">
             <Users size={12} />
-            <span>Sent by <span className="font-semibold text-gray-700">{broadcast.createdBy}</span></span>
+            <span>Sent by <span className="font-semibold text-slate-700">{broadcast.createdBy}</span></span>
           </div>
         </div>
 
@@ -202,7 +202,7 @@ function BroadcastItem({ broadcast, onDelete }: BroadcastItemProps) {
         {onDelete && (
           <button
             onClick={() => onDelete(broadcast.id)}
-            className="text-gray-400 hover:text-rose-600 hover:bg-rose-50 p-1.5 rounded-lg transition-colors flex-shrink-0"
+            className="text-slate-400 hover:text-rose-600 hover:bg-rose-50 p-1.5 rounded transition-colors flex-shrink-0"
           >
             <Trash2 size={14} />
           </button>
