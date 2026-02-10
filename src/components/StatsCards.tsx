@@ -1,6 +1,7 @@
-// Stats Cards Component - Enhanced Visual Design
+// Stats Cards Component - Overview Dashboard Metrics
 import { DashboardStats } from '@/lib/types';
-import { Users, ListTodo, CheckCircle, Clock, AlertTriangle, Zap, Activity, ArrowUp, ArrowDown } from 'lucide-react';
+import { Users, ListTodo, Clock, CheckCircle, AlertTriangle, Zap, Activity, TrendingUp } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface StatsCardsProps {
   stats: DashboardStats;
@@ -14,8 +15,9 @@ export default function StatsCards({ stats }: StatsCardsProps) {
       total: stats.totalAgents,
       icon: Users,
       color: 'indigo',
-      trend: `${Math.round((stats.activeAgents / stats.totalAgents || 1) * 100)}% online`,
-      increase: true,
+      trend: `${stats.activeAgents} of ${stats.totalAgents} online`,
+      trendUp: true,
+      trendValue: '+2 today',
     },
     {
       title: 'Total Tasks',
@@ -23,7 +25,8 @@ export default function StatsCards({ stats }: StatsCardsProps) {
       icon: ListTodo,
       color: 'purple',
       trend: `${stats.inProgressTasks} in progress`,
-      increase: true,
+      trendUp: true,
+      trendValue: '+5 this week',
     },
     {
       title: 'Completed',
@@ -31,67 +34,71 @@ export default function StatsCards({ stats }: StatsCardsProps) {
       icon: CheckCircle,
       color: 'emerald',
       trend: 'Tasks finished',
-      increase: true,
+      trendUp: true,
+      trendValue: '+12 done',
     },
     {
       title: 'Needs Review',
       value: stats.needsReviewTasks,
       icon: AlertTriangle,
       color: 'amber',
-      trend: 'Awaiting approval',
-      increase: false,
+      trend: 'Awaiting your approval',
+      trendUp: false,
+      trendValue: '3 pending',
     },
     {
       title: 'Assigned',
       value: stats.assignedTasks,
       icon: Clock,
-      color: 'cyan',
+      color: 'sky',
       trend: 'Pending tasks',
-      increase: true,
+      trendUp: true,
+      trendValue: '+2 new',
     },
     {
       title: 'Urgent Items',
       value: stats.urgentMessages,
       icon: Zap,
       color: 'rose',
-      trend: 'Immediate attention',
-      increase: false,
+      trend: 'Requires immediate attention',
+      trendUp: false,
+      trendValue: `${stats.urgentMessages} critical`,
     },
   ];
 
   const colorClasses = {
     indigo: {
-      bg: 'gradient-bg-indigo',
+      bg: 'bg-gradient-to-br from-indigo-500 to-indigo-600',
       bgLight: 'bg-indigo-50',
       text: 'text-indigo-600',
       border: 'border-indigo-200',
     },
     purple: {
-      bg: 'gradient-bg-pastel',
+      bg: 'bg-gradient-to-br from-purple-500 to-purple-600',
       bgLight: 'bg-purple-50',
       text: 'text-purple-600',
       border: 'border-purple-200',
     },
     emerald: {
-      bg: 'gradient-bg-green',
+      bg: 'bg-gradient-to-br from-emerald-500 to-emerald-600',
       bgLight: 'bg-emerald-50',
       text: 'text-emerald-600',
       border: 'border-emerald-200',
     },
     amber: {
-      bg: 'gradient-bg-orange',
+      bg: 'bg-gradient-to-br from-amber-500 to-amber-600',
       bgLight: 'bg-amber-50',
       text: 'text-amber-600',
       border: 'border-amber-200',
     },
-    cyan: {
-      bg: 'gradient-bg-blue',
-      bgLight: 'bg-cyan-50',
-      text: 'text-cyan-600',
-      border: 'border-cyan-200',
+    sky: {
+      bg: 'bg-gradient-to-br from-sky-500 to-sky-600',
+      bgLight: 'bg-sky-50',
+      text: 'text-sky-600',
+      border: 'border-sky-200',
     },
     rose: {
-      bg: 'gradient-bg-rose',
+      bg: 'bg-gradient-to-br from-rose-500 to-rose-600',
       bgLight: 'bg-rose-50',
       text: 'text-rose-600',
       border: 'border-rose-200',
@@ -99,76 +106,71 @@ export default function StatsCards({ stats }: StatsCardsProps) {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-      {cards.map((card) => {
-        const Icon = card.icon;
-        const color = colorClasses[card.color as keyof typeof colorClasses];
-        const TrendIcon = card.increase ? ArrowUp : ArrowDown;
+    <div className="mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {cards.map((card) => {
+          const Icon = card.icon;
+          const color = colorClasses[card.color as keyof typeof colorClasses];
 
-        return (
-          <div
-            key={card.title}
-            className="
-              group relative overflow-hidden
-              bg-white rounded-xl p-4
-              shadow-sm hover:shadow-xl
-              border border-gray-100 hover:border-gray-200
-              transition-all duration-300
-              hover:-translate-y-1
-            "
-          >
-            {/* Decorative gradient background */}
-            <div className={`
-              absolute -top-8 -right-8 w-24 h-24
-              ${color.bg} rounded-full opacity-10
-              group-hover:opacity-20 transition-opacity
-            `}></div>
-
-            <div className="relative z-10">
-              {/* Header with icon */}
-              <div className="flex items-start justify-between mb-3">
-                <div className={`
-                  w-12 h-12 rounded-xl ${color.bg}
-                  flex items-center justify-center
-                  shadow-lg shadow-${card.color}-500/20
-                  group-hover:scale-110 transition-transform
-                `}>
-                  <Icon size={22} className="text-white" />
-                </div>
-                {card.title === 'Active Agents' && (
-                  <div className="flex items-center gap-1 px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <Activity size={10} />
+          return (
+            <div
+              key={card.title}
+              className="group relative bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            >
+              {/* Background gradient on hover */}
+              <div className={cn(
+                "absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-5 transition-opacity",
+                color.bg
+              )} />
+              
+              <div className="relative">
+                {/* Header */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className={cn("w-14 h-14 rounded-xl shadow-lg flex items-center justify-center", color.bg)}>
+                    <Icon size={28} className="text-white" />
                   </div>
-                )}
+                  
+                  {/* Active indicator for agents */}
+                  {card.title === 'Active Agents' && (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 border border-emerald-200 rounded-full">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                      <span className="text-xs font-semibold text-emerald-700">Live</span>
+                    </div>
+                  )}
+
+                  {/* Trend indicator */}
+                  {card.trendValue && (
+                    <div className={cn(
+                      "flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold",
+                      card.trendUp ? "bg-emerald-50 text-emerald-700 border border-emerald-200" : "bg-rose-50 text-rose-700 border border-rose-200"
+                    )}>
+                      <TrendingUp size={12} className={!card.trendUp ? "rotate-180" : ""} />
+                      <span>{card.trendValue}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Value */}
+                <div className="mb-2">
+                  <span className="text-4xl font-bold text-gray-900 tracking-tight">
+                    {card.value}
+                  </span>
+                  {card.total !== undefined && (
+                    <span className="text-xl font-medium text-gray-400 ml-1">/ {card.total}</span>
+                  )}
+                </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">{card.title}</h3>
+                <p className="text-sm text-gray-500">{card.trend}</p>
               </div>
 
-              {/* Value */}
-              <div className="mb-2">
-                <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-700">
-                  {card.value}
-                </span>
-                {card.total !== undefined && (
-                  <span className="text-lg text-gray-400 ml-1">/ {card.total}</span>
-                )}
-              </div>
-
-              {/* Trend */}
-              <div className="flex items-center gap-1.5">
-                <TrendIcon size={12} className={card.increase ? 'text-emerald-500' : 'text-rose-500'} />
-                <span className="text-xs font-medium text-gray-500">{card.trend}</span>
-              </div>
+              {/* Bottom accent line */}
+              <div className={cn("absolute bottom-0 left-4 right-4 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity", color.bgLight)} />
             </div>
-
-            {/* Hover glow effect */}
-            <div className={`
-              absolute bottom-0 left-0 right-0 h-0.5
-              ${color.bg} opacity-0 group-hover:opacity-100
-              transition-opacity
-            `}></div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
