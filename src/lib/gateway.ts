@@ -1,6 +1,8 @@
 // Gateway Integration Layer for Reshaa Agent Dashboard
+import { Agent, Task, ChatMessage } from './types';
 
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:8080';
+const GATEWAY_TOKEN = process.env.NEXT_PUBLIC_GATEWAY_TOKEN || process.env.GATEWAY_TOKEN || '';
 
 export interface GatewayResponse<T = any> {
   success: boolean;
@@ -10,9 +12,23 @@ export interface GatewayResponse<T = any> {
 
 class GatewayClient {
   private url: string;
+  private token: string;
 
-  constructor(url: string = GATEWAY_URL) {
+  constructor(url: string = GATEWAY_URL, token: string = GATEWAY_TOKEN) {
     this.url = url;
+    this.token = token;
+  }
+
+  private getHeaders(): Record<string, string> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (this.token) {
+      headers['Authorization'] = `Bearer ${this.token}`;
+    }
+
+    return headers;
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<GatewayResponse<T>> {
@@ -20,7 +36,7 @@ class GatewayClient {
       const response = await fetch(`${this.url}${endpoint}`, {
         ...options,
         headers: {
-          'Content-Type': 'application/json',
+          ...this.getHeaders(),
           ...options.headers,
         },
       });
@@ -103,17 +119,37 @@ class GatewayClient {
       method: 'POST',
     });
   }
+
+  // Check if Gateway is connected
+  async checkConnection() {
+    return this.request<any>('/api/v1/agents/list', {
+      method: 'POST',
+    });
+  }
+
+  // Transform Gateway session to our Agent interface
+  transformGatewaySessionToAgent(session: any): Agent {
+    return {
+      id: session.sessionKey,
+      name: session.label || session.sessionKey.split(':')[1] || 'Unknown',
+      role: 'Agent',
+      status: session.lastChannel ? 'active' : 'idle',
+      tasksAssigned: 0,
+      lastActive: session.updatedAt || new Date().toISOString(),
+      capabilities: ['AI', 'Agent'],
+    };
+  }
 }
 
 export const gateway = new GatewayClient();
 
 // Mock data for development (will be replaced with real API calls)
-export const mockAgents = [
+export const mockAgents: Agent[] = [
   {
     id: 'reshaa-main',
     name: 'Reshaa',
     role: 'Main Coordinator',
-    status: 'active' as const,
+    status: 'active',
     tasksAssigned: 3,
     lastActive: new Date().toISOString(),
     capabilities: ['orchestration', 'coordination', 'review'],
@@ -122,7 +158,7 @@ export const mockAgents = [
     id: 'frontend-dev',
     name: 'Nexa',
     role: 'Frontend Engineer',
-    status: 'busy' as const,
+    status: 'busy',
     tasksAssigned: 2,
     lastActive: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
     capabilities: ['React', 'Vue', 'Tailwind CSS', 'UI Components'],
@@ -131,7 +167,7 @@ export const mockAgents = [
     id: 'backend-dev',
     name: 'CodeX',
     role: 'Backend Engineer',
-    status: 'active' as const,
+    status: 'active',
     tasksAssigned: 1,
     lastActive: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
     capabilities: ['Node.js', 'Python', 'API Design', 'Database'],
@@ -140,7 +176,7 @@ export const mockAgents = [
     id: 'ui-designer',
     name: 'Pixel',
     role: 'UI/UX Designer',
-    status: 'idle' as const,
+    status: 'idle',
     tasksAssigned: 1,
     lastActive: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
     capabilities: ['Figma', 'Design Systems', 'User Research'],
@@ -149,21 +185,21 @@ export const mockAgents = [
     id: 'qa-engineer',
     name: 'TestBot',
     role: 'QA Engineer',
-    status: 'idle' as const,
+    status: 'idle',
     tasksAssigned: 0,
     lastActive: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
     capabilities: ['Testing', 'Code Review', 'Quality Assurance'],
   },
 ];
 
-export const mockTasks = [
+export const mockTasks: Task[] = [
   {
     id: 'task-1',
     title: 'Build Dashboard Layout',
     description: 'Create the main dashboard layout with agent status cards',
     assignedTo: 'frontend-dev',
-    status: 'in-progress' as const,
-    priority: 'urgent' as const,
+    status: 'in-progress',
+    priority: 'urgent',
     createdAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
     tags: ['frontend', 'dashboard'],
@@ -173,8 +209,8 @@ export const mockTasks = [
     title: 'Setup Gateway Integration',
     description: 'Integrate with OpenClaw Gateway for agent communication',
     assignedTo: 'backend-dev',
-    status: 'in-progress' as const,
-    priority: 'urgent' as const,
+    status: 'in-progress',
+    priority: 'urgent',
     createdAt: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
     tags: ['backend', 'api'],
@@ -184,8 +220,8 @@ export const mockTasks = [
     title: 'Design Task Cards Component',
     description: 'Create reusable task card component with status indicators',
     assignedTo: 'ui-designer',
-    status: 'completed' as const,
-    priority: 'normal' as const,
+    status: 'completed',
+    priority: 'normal',
     createdAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 20 * 60 * 1000).toISOString(),
     completedAt: new Date(Date.now() - 20 * 60 * 1000).toISOString(),
@@ -196,15 +232,15 @@ export const mockTasks = [
     title: 'Review Dashboard Architecture',
     description: 'Review and approve the overall dashboard architecture',
     assignedTo: 'reshaa-main',
-    status: 'needs-review' as const,
-    priority: 'normal' as const,
+    status: 'needs-review',
+    priority: 'normal',
     createdAt: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
     tags: ['architecture', 'review'],
   },
 ];
 
-export const mockChatMessages: any[] = [
+export const mockChatMessages: ChatMessage[] = [
   {
     id: 'msg-1',
     from: 'Nexa',
