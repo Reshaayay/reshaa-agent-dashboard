@@ -1,4 +1,4 @@
-// Main Dashboard Page
+// Main Dashboard Page - Enhanced Design
 'use client';
 
 import { useEffect } from 'react';
@@ -12,7 +12,7 @@ import ReshaAssistant from '@/components/ReshaAssistant';
 import BroadcastPanel from '@/components/BroadcastPanel';
 import AgentBuilder from '@/components/AgentBuilder';
 import { mockAgents, mockTasks, mockChatMessages } from '@/lib/gateway';
-import { Activity, Bot, MessageSquare, Settings, Bell } from 'lucide-react';
+import { Activity, Bot, MessageSquare, Settings, Bell, Zap, Users, LayoutDashboard, Sparkles } from 'lucide-react';
 
 export default function Dashboard() {
   const {
@@ -181,29 +181,36 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-[1920px] mx-auto px-4 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 pattern-grid">
+      {/* Enhanced Header with Glass Effect */}
+      <header className="header-glass sticky top-0 z-50 border-b border-indigo-100/50">
+        <div className="max-w-[1920px] mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl gradient-bg-indigo flex items-center justify-center shadow-lg glow-indigo">
                 <Bot size={24} className="text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">Reshaa Agent Dashboard</h1>
-                <p className="text-sm text-gray-500">AI Development Team Command Center</p>
+                <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+                  Reshaa Agent Dashboard
+                </h1>
+                <p className="text-sm text-gray-500 font-medium">AI Development Team Command Center</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <button className="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+              <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-100/50">
+                <Zap size={16} className="text-indigo-600" />
+                <span className="text-sm font-semibold text-indigo-700">Live</span>
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+              </div>
+              <button className="relative p-2.5 bg-white rounded-xl text-gray-500 hover:text-indigo-600 hover:shadow-lg hover:shadow-indigo-100/50 transition-all border border-gray-200 hover:border-indigo-200">
                 <Bell size={20} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full status-pulse border-2 border-white"></span>
               </button>
-              <button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+              <button className="p-2.5 bg-white rounded-xl text-gray-500 hover:text-indigo-600 hover:shadow-lg hover:shadow-indigo-100/50 transition-all border border-gray-200 hover:border-indigo-200">
                 <Settings size={20} />
               </button>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold shadow-lg glow-pink cursor-pointer">
                 R
               </div>
             </div>
@@ -211,51 +218,75 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-[1920px] mx-auto p-4 space-y-6">
-        {/* Stats Overview */}
-        <StatsCards stats={useDashboardStore.getState().stats} />
+      {/* Main Content - Enhanced Spacing and Layout */}
+      <main className="max-w-[1920px] mx-auto p-6 space-y-8">
+        {/* Stats Overview - Better Container */}
+        <div className="card-elegant rounded-2xl p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-lg gradient-bg-indigo flex items-center justify-center">
+              <LayoutDashboard size={20} className="text-white" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">Dashboard Overview</h2>
+              <p className="text-sm text-gray-500">Real-time team metrics and status</p>
+            </div>
+          </div>
+          <StatsCards stats={useDashboardStore.getState().stats} />
+        </div>
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Column - Agents & Tasks */}
+        {/* Main Grid - Better Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Left Column - Agents */}
           <div className="lg:col-span-3 space-y-6">
-            {/* Agents List */}
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-                  <Activity size={18} />
-                  Agents
-                </h2>
-                <span className="text-sm text-gray-500">{agents.length} total</span>
+            <div className="card-elegant rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg gradient-bg-blue flex items-center justify-center">
+                    <Users size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-gray-900">Active Agents</h2>
+                    <p className="text-sm text-gray-500">{agents.length} online</p>
+                  </div>
+                </div>
               </div>
-              <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
+              <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                 {agents.map((agent) => (
-                  <AgentStatusCard
-                    key={agent.id}
-                    agent={agent}
-                    selected={false}
-                  />
+                  <AgentStatusCard key={agent.id} agent={agent} selected={false} />
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Center Column - Task Board */}
-          <div className="lg:col-span-6 space-y-6">
-            {/* Task Board */}
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-                  <MessageSquare size={18} />
-                  Board view
-                </h2>
+          {/* Center Column - Tasks & Chat */}
+          <div className="lg:col-span-6 space-y-8">
+            {/* Task Board - Enhanced */}
+            <div className="card-elegant rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg gradient-bg-rose flex items-center justify-center">
+                    <MessageSquare size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-gray-900">Task Board</h2>
+                    <p className="text-sm text-gray-500">Track team progress</p>
+                  </div>
+                </div>
               </div>
               <TaskBoard tasks={tasks} />
             </div>
 
-            {/* Chat Channels */}
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 h-[500px]">
+            {/* Chat Channels - Enhanced */}
+            <div className="card-elegant rounded-2xl p-6 h-[550px]">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-lg gradient-bg-pastel flex items-center justify-center">
+                  <Sparkles size={20} className="text-white" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">Team Communication</h2>
+                  <p className="text-sm text-gray-500">Agent collaboration hub</p>
+                </div>
+              </div>
               <ChatChannels
                 agent_chat={chatMessages}
                 agent_inputs={agentInputs}
@@ -264,17 +295,17 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Right Column - Reshaa, Broadcast, Agent Builder */}
-          <div className="lg:col-span-3 space-y-6">
-            {/* Reshaa Assistant */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 h-[600px]">
+          {/* Right Column - Reshaa & Tools */}
+          <div className="lg:col-span-3 space-y-8">
+            {/* Reshaa Assistant - Enhanced */}
+            <div className="card-elegant rounded-2xl p-6 h-[650px]">
               <ReshaAssistant
                 messages={reshaMessages}
                 onSendMessage={handleSendReshaaMessage}
               />
             </div>
 
-            {/* Broadcast Panel */}
+            {/* Broadcast Panel - Enhanced */}
             <div>
               <BroadcastPanel
                 broadcasts={broadcasts}
@@ -282,8 +313,10 @@ export default function Dashboard() {
               />
             </div>
 
-            {/* Agent Builder */}
-            <AgentBuilder onCreateAgent={handleCreateAgent} />
+            {/* Agent Builder - Enhanced */}
+            <div>
+              <AgentBuilder onCreateAgent={handleCreateAgent} />
+            </div>
           </div>
         </div>
       </main>
